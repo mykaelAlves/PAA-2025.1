@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>AC01</title>
+
+  <!-- MATHJAX 3 (através da CDN) -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" 
+  async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<body>
+
+    <p><span style="font-size: medium;"><strong>Questões</strong></span></p>
+    <p></p>
+    <ol>
+    <li id="yui_3_17_2_1_1678840447697_65"><span style="font-size: medium;">
+      Considere a ordenação de \(n\) números armazenados no vetor \(A = \langle
+       a_1, a_2, \ldots, a_n \rangle\), localizando primeiro o menor elemento de
+        \(A\) e permutando esse elemento com o elemento contido em \(A[1]\).
+         Em seguida, determine o segundo menor elemento 
+        </span><span style="font-size: medium;">
+          de \(A\) e permute-o com \(A[2]\). 
+          Continue dessa maneira para os primeiros \(n-1\) elementos de \(A\).
+          Escreva o pseudocódigo para esse algoritmo, conhecido como <strong>
+          ordenação por seleção</strong>. Forneça os tempos de execução 
+          \(T(n)\) do melhor caso e do pior caso da ordenação por seleção.
+          O cálculo de \(T(n)\) deve ser feito de modo formal,
+          como foi realizado em sala para a ordenação por inserção.
+        </span></li>
+    <li><p><span style="font-size: medium;">É verdade que \(10n^2 + 200n + 500/n
+       = O(n^2)\)? É verdade que \(n^2 - 200n - 300 = O(n)\)? Prove que suas 
+       respostas são válidas.</span></p></li>
+    <li>
+    <p>
+      <span style="font-size: medium;">Prove as seguintes afirmações:</span>
+    </p>
+    <ul>
+    <li>\( (n+1)^2 = O(n^2) \)</li>
+    <li>Seja \(C(n, k)\) o número de combinações de \(n\) objetos tomados \(k\) 
+      a \(k\). Mostre que \(C(n, 2) = O(n^2)\)</li>
+    <li>\(\lg(100n^3+200n+300)^2 = O(\lg n)\)</li>
+    </ul>
+    </li>
+    </ol>
+
+    <p><strong>Resolução</strong></p>
+    <ol>
+      <li>
+        <p>O algoritmo pode ser escrito da seguinte forma:</p>
+        <pre style="background-color: #f0f0f0; padding: 10px;">
+  fn selectionSort(A, n):
+      for i = 0 to n - 1:
+          min = i
+          for j = i + 1 to n - 1:
+              if A[j] < A[min]:
+                  min = j
+          end for
+          swap(A[i], A[min])
+      end for
+  end fn
+        </pre>
+        <p style="font-size: x-small;">*Considerando o primeiro elemento como 
+          A[0]*</p>
+        <p style="font-size: x-small;">*"to" indica um intervalo que não inclui 
+          o ultimo elemento*</p>
+        <p>O Selection Sort sempre terá o mesmo tempo de execução de \(O(n^2)\),
+           independentemente da ordenação do vetor. Isso acontece porque, para 
+           cada posição \(i\) do vetor (de \(0\) até \(n-2\)), o algoritmo
+           percorre o restante do vetor para encontrar o menor elemento.
+           Assim, temos o seguinte número de comparações:</p>
+        <p style="font-size: medium;">
+          \[
+          T(n) = \sum_{i=0}^{n-2} (\sum_{j=i+1}^{n-1} 1) = \sum_{i=0}^{n-2} 
+          (n - 1 - i)
+          \]
+          \[
+          = (n - 1) + (n - 2) + \dots + 1 = \sum_{k=1}^{n-1} k = \frac{n(n - 1)}
+          {2}
+          \]
+        </p>
+        <p style="font-size: medium;">
+          \[\therefore 
+          T(n) = O(n^2)
+          \]
+        </p>
+        <p style="font-size: medium;">
+          Como essa quantidade de comparações é sempre realizada, 
+          independentemente da ordem inicial dos elementos, o tempo de execução
+          no melhor, médio e pior casos é sempre \(O(n^2)\).
+        </p>
+      </li>
+      <hr>
+      <br>
+      <li>
+        <p></p>
+    Prova de que \( 10n^2 + 200n + 500/n = O(n^2) \):</p>
+    <p style="font-size: medium;">
+      Dado que \(\forall n \geq n_0, 0 \leq f(n) \leq C*g(n)\), temos:
+      \[
+      10n^2 + 200n + 500/n \leq 10n^2 + 200n^2 + 500n^2
+      \]
+      \[
+      10n^2 + 200n + 500/n \leq 710n^2
+      \]
+      \[
+      \therefore C = 710
+      \]
+      Para \(n_0 = 1\), temos:
+      \[
+      10n_0^2 + 200n_0 + 500/n_0 \leq 710n_0^2
+      \]
+      \[
+      10 + 200 + 500 \leq 710
+      \]
+      \[
+      710 \leq 710
+      \]
+      \[
+      \therefore 10n^2 + 200n + \frac{500}{n} = O(n^2) \text{ dado que } 0 \leq 
+      10n^2 + 200n + \frac{500}{n} \leq 710n^2 \text{ para } n \geq 1.
+      \]
+    </p>
+    <br>
+    Prova de que \( n^2 - 200n - 300 \neq O(n) \):</p>
+    <p style="font-size: medium;">
+      Dado que \(\forall n \geq n_0, 0 \leq f(n) \leq C*g(n)\), suponhamos que 
+      \(n^2 - 200n - 300 = O(n)\).
+      Seja C uma constante qualquer, então temos:
+      \[
+      n^2 - 200n - 300 \leq C*n
+      \]
+      \[
+      n - 200 - 300/n \leq C
+      \]
+      O que não é verdade, dado que \(n^2 - 200n - 300\) cresce infinitamente, 
+      portanto não pode ser menor que \(C\). Por contradição, temos:
+      \[
+      \therefore n^2 - 200n - 300 \neq O(n)
+      \]
+    </p>
+    </li>
+    <hr>
+    <br>
+    <li>
+      <ul>
+        <li>
+          <p>\( (n+1)^2 = O(n^2) \):</p>
+          <p style="font-size: medium;">
+            Primeiramente, vamos reescrever \((n+1)^2\):
+            \[
+            (n+1)^2 = n² + 2n + 1
+            \]
+          </p>
+          <p style="font-size: medium;">
+            Dado que \(\forall n \geq n_0, 0 \leq f(n) \leq C*g(n)\), temos:
+            \[
+            n² + 2n + 1 \leq n² + 2n² + n²
+            \]
+            \[
+            n² + 2n + 1 \leq n² + 2n² + n²
+            \]
+            \[
+            \therefore C = 4
+            \]
+            Para \(n_0 = 1\), temos:
+            \[
+            n_0^2 + 2n_0 + 1 \leq 4n_0^2
+            \]
+            \[
+            1 + 2 + 1 \leq 4
+            \]
+            \[
+            4 \leq 4
+            \]
+            \[
+            \therefore (n+1)^2 = O(n^2) \text{ dado que } 0 \leq (n+1)^2 \leq
+            4n^2 \text{ para } n \geq 1.
+            \]
+          </p>
+        </li>
+        <li>
+          <p>Seja \(C(n, k)\) o número de combinações de \(n\) objetos tomados 
+            \(k\) a \(k\). Mostre que \(C(n, 2) = O(n^2)\):</p>
+          <p style="font-size: medium;">
+            Primeiramente, vamos reescrever \(C(n, 2)\):
+            \[
+            C(n, 2) = \frac{n!}{(n-2)!2!}
+            \]
+            \[
+            C(n, 2) = \frac{n(n-1)}{2}
+            \]
+            \[
+            C(n, 2) = \frac{n^2-n}{2}
+            \]
+            \[
+            C(n, 2) = 0,5n^2-0,5n
+            \]
+          </p>
+          <p style="font-size: medium;">
+            Dado que \(\forall n \geq n_0, 0 \leq f(n) \leq A*g(n)\), temos:
+            \[
+            0,5n^2-0,5n \leq 0,5n^2
+            \]
+            \[
+            \therefore A = 0,5
+            \]
+            Para \(n_0 = 1\), temos:
+            \[
+            0,5n_0^2-0,5n_0 \leq 0,5n_0^2
+            \]
+            \[
+            0,5(1)^2-0,5(1) \leq 0,5(1)^2
+            \]
+            \[
+            0,5-0,5 \leq 0,5
+            \]
+            \[
+            0 \leq 0,5
+            \]
+            \[
+            \therefore C(n, 2) = O(n^2) \text{ dado que } C(n, 2) \leq 0,5n^2
+            \text{ para } n \geq 1.
+            \]
+          </p>
+        </li>
+        <li>
+          <p>\(\lg(100n^3+200n+300)^2 = O(\lg n)\):</p>
+          <p style="font-size: medium;">
+            Primeiramente, vamos reescrever \(\lg(100n^3+200n+300)^2\). Seja
+            \(m\) um número qualquer, temos:
+            \[
+            \lg(m) = \lg(100n^3+200n+300)^2
+            \]
+            \[
+            m = 2^{\lg(100n^3+200n+300)^2}
+            \]
+            \[
+            \lg(m) = \lg(2^{\lg(100n^3+200n+300)^2})
+            \]
+          </p>
+          <p style="font-size: medium;">
+            Dado que \(\forall n \geq n_0, 0 \leq f(n) \leq C*g(n)\), temos:
+            \[
+            \lg(2^{\lg(100n^3+200n+300)^2}) \leq \lg(2^{\lg(100n^3+200n+300)^2})
+            \]
+            \[
+            \therefore C = 1
+            \]
+            Para \(n_0 = 0\), temos:
+            \[
+            \lg(2^{\lg(100n_0^3+200n_0+300)^2}) \leq 
+            \lg(2^{\lg(100n_0^3+200n_0+300)^2})
+            \]
+            \[
+            \lg(2^{\lg(100(0)^3+200(0)+300)^2}) \leq 
+            \lg(2^{\lg(100(0)^3+200(0)+300)^2})
+            \]
+            \[
+            \lg(2^{\lg(300)^2}) \leq 
+            \lg(2^{\lg(300)^2})
+            \]
+            \[
+            \lg(300)^2 \leq 
+            \lg(300)^2
+            \]
+            \[
+            \therefore \lg(100n^3+200n+300)^2 = O(\lg n) \text{ dado que } 0 
+            \leq \lg(100n^3+200n+300)^2 \leq \lg(2^{\lg(100(3)+200+300)^2})
+            \text{ para } n \geq 0.
+            \]
+      </ul>
+    </li>
+    </ol>
+    <br>
+    <hr>
+    <address>
+      <p style="text-align: right;">
+        <strong>José Mykael Alves Nogueira</strong>
+    </address>
+  </body>
+  </html>
