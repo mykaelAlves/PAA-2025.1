@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>AC03</title>
+
+  <!-- MATHJAX 3 (através da CDN) -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <h1>Avaliação Continuada 03</h1>
+  <h1>(Projetando Algoritmos Iterativos)</h1>
+  <hr />
+  <h1>Questão 1</h1>
+  <ul>
+  <li>
+  <p><strong>Questão 1 (Partição).</strong> A entrada é uma lista \( L[1..n] \) de números, com \(n \geq 1\). Lembre-se que os nossos arrays nessa disciplina começam com o índice \(1\). O elemento \(L[1]\) é chamado de pivô. Seja \(k\) o número de elementos de \(L\) com valor menor ou igual ao pivô. Seu objetivo é especificar um algoritmo de <strong>tempo linear</strong> \(\Theta(n)\) para reorganizar os elementos de \(L\) de modo que as três condições a seguir sejam satisfeitas:</p>
+  <ul>
+  <li>O pivô \(L[1]\) seja reposicionado para a posição \(k\).</li>
+  <li>Os elementos com valor menor ou igual ao pivô sejam colocados nas \(k\) primeiras posições.</li>
+  <li>Os elementos com valor maior que o pivô sejam colocados nas últimas \(n-k\) posições.</li>
+  </ul>
+  <p><strong>Obs. 1:</strong> Este problema poderia ser resolvido simplesmente ordenando a lista, mas neste caso gastaria tempo \(\Theta(n\log{n})\).</p>
+  <p><strong>Obs. 2:</strong> Este algoritmo é utilizado pelo algoritmo de ordenação Quicksort.</p>
+  <p><strong>Passos Básicos:</strong> Utilize dois índices \(i\) e \(j\). O índice \(i\) vai da posição \(2\) em direção em final da lista, e o índice \(j\) vai da última posição em direção ao início da lista. Em cada iteração, avançe o \(i\) se \(L[i]\) é menor ou igual ao pivô. Caso contrário, avançe o \(j\) se \(L[j]\) é maior que o pivô. Se nenhuma destas condições ocorrer, troque \(L[i]\) com \(L[j]\) e avance \(i\) e \(j\). A repetição termina quando \(j &lt; i\). Finalmente, reposicione o pivô de modo que apenas elementos maiores que o pivô estejam à direita dele.</p>
+  <p><strong>Invariante de laço:</strong><br /> INV1: Todos os elementos nas posições menores que \(i\) possuem valor menor ou igual ao pivô.<br /> INV2: Todos os elementos nas posições maiores que \(j\) possuem valor maior que o pivô.</p>
+  
+  <h2>Forneça resposta para cada um dos itens abaixo:</h2>
+  <ol type="a">
+  <li>Forneça uma medida de progresso, e argumente que o algoritmo termina.</li>
+  <li>Indique como estabelecer o invariante do laço, ou seja, quais ações no código pré-laço tornam o invariante do laço verdadeiro na primeira iteração. Justifique.</li>
+  <li>Qual o código do laço? Argumente que ele mantém o invariante do laço.</li>
+  <li>Argumente que o invariante do laço e a condição de saída garantem que, assim que a execução sair do laço teremos \(j = i-1\).</li>
+  <li>Qual o código pós-laço? Argumente que as pós-condições são satisfeitas.</li>
+  <li>Forneça o pseudocódigo.</li>
+  <li>Considere os casos especiais a seguir e indique, caso necessário, quais adaptações devem ser feitas no algoritmo para atendê-los. (i) A lista tem apenas \(1\) elemento. (ii) Nenhum elemento é maior que o pivô. (iii) Exceto o pivô, todo os outros elementos são maiores que o pivô.</li>
+  <li>Forneça a complexidade de tempo de pior caso em notação \(O\).</li>
+  </ol></li>
+  </ul>
+  <hr />
+  <h1>Questão 2</h1>
+  <ul>
+  <li>
+  <p><strong>Questão 2 (Intercalação).</strong> Nesta questão, queremos que você resolva o problema da intercalação de listas.</p>
+  <p><strong>Entrada:</strong> A entrada são duas listas \( L[1..p] \) e \( M[1..q] \) de números, com \(p \geq 1\) e \( q \geq 1 \), tal que as duas listas estão ordenadas em ordem crescente. Lembre-se que as nossas listas nessa disciplina começam com o índice \(1\).</p>
+  <p><strong>Objetivo:</strong> Seu objetivo é especificar um algoritmo de <strong>tempo linear</strong> \(\Theta(n)\) para criar uma terceira lista \( N[1..p+q] \) contendo os elementos das listas \(L\) e \(M\) em ordem crescente. Essa nova lista \(N\) deve ser retornada como resultado do seu algoritmo.</p>
+  <p><strong>Saída:</strong> Lista \( N[1..p+q] \) ordenada em ordem crescente.</p>
+  <p><strong>Obs. 1:</strong> Este problema poderia ser resolvido simplesmente copiando os elementos de \(L\) e \(M\) em \(N\) e ordenando a lista \(N\), mas neste caso gastaria tempo \(\Theta(n\log{n})\).</p>
+  <p><strong>Obs. 2:</strong> Este problema é uma leve modificação de um problema semelhante que ocorre como subrotina no algoritmo de ordenação Mergesort.</p>
+  <p><strong>Passos Básicos:</strong> Utilize dois índices \(i\) e \(j\). O índice \(i\) indica a posição do menor elemento da lista \(L\) que ainda não foi copiado para a lista de saída, e o índice \(j\) indica a posição do menor elemento da lista \(M\) que ainda não foi copiado para a lista de saída. Em cada iteração, avançe o \(i\) se \(L[i] \leq M[j]\). Caso contrário, avançe o \(j\). A repetição termina quando \((i &gt; p)\) ou \((j &gt; q)\). Neste momento, uma das listas ficou vazia, mas a outra ainda pode conter elementos. É preciso copiar a lista resultante no vetor de saída.</p>
+  <h2>Forneça resposta para cada um dos itens abaixo:</h2>
+  <ol type="a">
+  <li>Forneça uma invariante de laço para o laço principal do seu algoritmo.</li>
+  <li>Forneça uma medida de progresso, e argumente que o algoritmo termina.</li>
+  <li>Indique como estabelecer o invariante do laço, ou seja, quais ações no código pré-laço tornam o invariante do laço verdadeiro na primeira iteração. Justifique.</li>
+  <li>Qual o código do laço? Argumente que ele mantém o invariante do laço.</li>
+  <li>Argumente que o invariante do laço e a condição de saída garantem que, assim que a execução sair do laço teremos \((i &gt; p)\) ou \((j &gt; q)\).</li>
+  <li>Qual o código pós-laço? Argumente que as pós-condições são satisfeitas.</li>
+  <li>Forneça o pseudocódigo.</li>
+  <li>Considere os casos especiais a seguir e indique, caso necessário, quais adaptações devem ser feitas no algoritmo para atendê-los. (i) As listas dadas como entrada têm apenas \(1\) elemento. (ii) Os elementos de uma das listas são todos iguais.</li>
+  <li>Forneça a complexidade de tempo de pior caso em notação \(O\).</li>
+  </ol></li>
+  </ul>
+  <br>
+  <hr>
+  <div>
+    <h1>Respostas</h1>
+    <div style="padding-left: 40px; padding-right: 20px;">
+      <h2>Questão 1</h3>
+      <div style="padding-left: 12px; padding-right: 20px;">
+        
+        <h4>A.</h4>
+        <div style="background-color: rgb(230, 230, 230); padding: 3vh;">
+          <p><strong>Medida de progresso: </strong>Podemos usar como métrica o
+          número de pares \((i,j)\) ainda não explorados, ou simplesmente a
+          soma dos deslocamentos de \(i\) e \(j\): a cada iteração ou \(i\)
+          avança ou \(j\) recua (ou ambos, em caso de <i>swap</i>). </p>
+          <p><strong>Argumento de término:</strong></p>
+          <ul>
+            <li>Inicialmente, \(i=2\) e \(j=n\);</li>
+            <li>A cada iteração, pelo menos um dos ponteiros move-se em direção
+              ao outro;</li>
+            <li>O laço executa enquanto \(i &le; j\) e termina assim que
+              \(i &gt; j\);</li>
+            <li>Como ambos percorrem no máximo \(n-1\) posições, temos
+              \(&Theta;(n)\) iterações no pior caso.</li>
+          </ul>
+        </div>
+        
+        <h4>B.</h4>
+        <div style="background-color: rgb(230, 230, 230);padding: 3vh;">
+          <p><strong>INV1: </strong>Todos os elementos nas posições menores que
+            \(i\) possuem valor menor ou igual ao pivô.<br>
+          <strong>INV2: </strong>Todos os elementos nas posições maiores que \(j\)
+            possuem valor maior que o pivô.
+          </p>
+          <p><strong>Inicialização: </strong></p>
+          <ul>
+            <li>Antes do laço, definimos \(i=2\) e \(j=n\);</li>
+            <li>Os subvetores \([2..i-1]\) e \([j+1..n]\) estão vazios, logo
+              vacuamente satisfazem INV1 e INV2, respectivamente.
+            </li>
+          </ul>
+        </div>
+        
+        <h4>C.</h4>
+        <div style="background-color: rgb(230, 230, 230);padding: 3vh;">
+          <p><strong>Pseudocódigo:</strong></p>
+          <pre style="border-radius: 8px; background-color: rgb(216, 216, 216);padding-left:4vh"><code style="font-size: 14px;font-family: 'Courier New', Courier, monospace;">
+while i ≤ j do
+  if L[i] ≤ pivo then
+    i++
+  else if L[j] > pivo then
+    j++
+  else
+    swap L[i], L[j]
+    i++
+    j--
+end
+          </code></pre>
+          <p><strong>Manutenção: </strong></p>
+          <ul>
+            <li>
+              Se avançamos \(i\) porque \(L[i] &le; pivo\), preservamos que tudo
+              menor que \(i\) segue menor ou igual ao \(pivo\);
+            </li>
+            <li>
+              Se recuamos \(j\) porque \(L[j] &gt; pivo\), preservamos que tudo
+              maior que \(j\) segue maior que \(pivo\);
+            </li>
+            <li>
+              Se trocamos \(L[i]\) com \(L[j]\), trazemos um valor menor ou igual
+              ao \(pivo\) para a região à esquerda de \(i\) e um valor maior que
+              \(pivo\) para a região à direita de \(j\), antes de atualizar \(i\) e
+              \(j\);
+            </li>
+          </ul>
+        </div>
+        
+        <h4>D.</h4>
+        <div style="background-color: rgb(230, 230, 230);padding: 3vh;">
+          <p>O laço termina exatamente quando \(i &gt; j\), ou seja quando 
+            \(
+            j - i + 1 &le; 0
+            \). Como \(j - i + 1\) é sempre inteiro e começa em \(n-1\), a primeira
+            vez que \(j - i + 1\) deixa de ser um positivo não-nulo é quando 
+            \(j - i + 1 = 0\).
+            <p>Logo, na saída do laço, temos
+              \[
+                j - i + 1 = 0 &longrightarrow; j = i - 1
+              \]
+            </p>
+          </p>
+        </div>
+        
+        <h4>E.</h4>
+        <div style="background-color: rgb(230, 230, 230); padding: 3vh;">
+          <p><strong>Código pós-laço:</strong></p>
+          <pre style="border-radius: 8px; background-color: rgb(216, 216, 216);padding-left:4vh"><code>
+swap L[1] com L[j]
+          </code></pre>
+          <p><strong>Argumento:</strong> Após o loop, <code>j = i - 1</code>. O subvetor <code>L[2..j]</code> contém elementos ≤ pivô e <code>L[i..n]</code> > pivô. A troca posiciona o pivô na posição <code>j</code> (exatamente <code>k</code>), garantindo:</p>
+          <ul>
+            <li><code>L[1..j-1]</code>: elementos ≤ pivô</li>
+            <li><code>L[j]</code>: pivô</li>
+            <li><code>L[j+1..n]</code>: elementos > pivô</li>
+          </ul>
+        </div>
+        
+        <h4>F.</h4>
+        <div style="background-color: rgb(230, 230, 230); padding: 3vh;">
+          <pre style="border-radius: 8px; background-color: rgb(216, 216, 216);padding-left:4vh"><code>
+def particao(L):
+    pivo = L[1]
+    i = 2
+    j = len(L)
+    while i <= j:
+        if L[i] <= pivo:
+            i += 1
+        elif L[j] > pivo:
+            j -= 1
+        else:
+            swap L[i] e L[j]
+            i += 1
+            j -= 1
+    swap L[1] e L[j]
+    return L
+          </code></pre>
+        </div>
+        
+        <h4>G.</h4>
+        <div style="background-color: rgb(230, 230, 230); padding: 3vh;">
+          <ul>
+            <li><strong>1 elemento:</strong> Loop não executa, troca <code>L[1]↔L[1]</code> mantém invariantes</li>
+            <li><strong>Nenhum > pivô:</strong> <code>j</code> permanece em <code>n</code>, pivô vai para <code>L[n]</code></li>
+            <li><strong>Todos > pivô:</strong> <code>j</code> chega a 1, pivô fica em <code>L[1]</code></li>
+          </ul>
+        </div>
+        
+        <h4>H.</h4>
+        <div style="background-color: rgb(230, 230, 230);padding: 3vh;">
+  <p>No pior caso (como quando o pivô acaba em uma extremidade da lista), os ponteiros percorrem praticamente todo o vetor.</p>
+
+  <ul>
+    <li>
+      Loop de avanço de \(i\) até \(i = n + 1\).
+      <br>
+      <strong>Total:</strong> aproximadamente \(2(n - 1)\) operações.
+    </li>
+    <li>
+      Loop de recuo de \(j\) até \(j = 1\).
+      <br>
+      <strong>Total:</strong> aproximadamente \(2(n - 1)\) operações.
+    </li>
+    <li>
+      Laço externo (swaps e comparações) executa no máximo \(n\) vezes.
+      <br>
+      <strong>Total:</strong> aproximadamente \(3n\) operações.
+    </li>
+    <li>
+      <i>Swap</i> final do pivô, custo constante.
+      <br>
+      <strong>Total:</strong> 2 operações.
+    </li>
+  </ul>
+
+  <p><strong>Polinômio total:</strong></p>
+  <p>
+    \[
+f(n) = 2(n - 1) + 2(n - 1) + 3n + 2
+ \]\[
+     = 2n - 2 + 2n - 2 + 3n + 2\]
+     \[= 7n - 2
+     \]
+  </p>
+  <hr style="width: 95%;">
+  <p><strong>Prova de <em>f(n) = O(n)</em></strong></p>
+
+  <p>Desejamos provar que existe uma constante <code>c &gt; 0</code> e um <code>n₀</code> tal que:</p>
+  <p>\(f(n) ≤ c·n, ∀ n ≥ n₀\)</p>
+
+  <p>Escolhendo <strong>c = 8</strong> e <strong>n₀ = 1</strong>, temos:</p>
+  <p>
+\(f(n) = 7n - 2 ≤ 7n ≤ 8n = c·n\)
+  </p>
+
+  <p>Logo, pela definição formal:</p>
+  <p>\(f(n) = O(n)\)</p>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <hr style="width: 95%;">
+
+    <div style="padding-left: 40px; padding-right: 20px;">
+      <h2>Questão 2</h3>
+      <div style="padding-left: 12px; padding-right: 20px;">
+        <h4>A.</h4>
+        <div style="background-color: rgb(230, 230, 230); padding: 3vh;">
+          <p><strong>INV:</strong> <code>N[1..k-1]</code> contém os <code>k-1</code> menores elementos ordenados. <code>L[i..p]</code> e <code>M[j..q]</code> contêm elementos restantes não copiados.</p>
+        </div>
+        
+        <h4>B.</h4>
+        <div style="background-color: rgb(230, 230, 230); padding: 3vh;">
+          <p><strong>Medida:</strong> \((p - i) + (q - j)\)</p>
+          <p><strong>Término:</strong> Medida reduz em 1 por iteração, atinge 0 em \(p+q\) passos</p>
+        </div>
+        
+        <h4>C.</h4>
+        <div style="background-color: rgb(230, 230, 230); padding: 3vh;">
+          <p><strong>Inicialização:</strong> \(i = j = k = 1\), <code>N[1..0]</code> vazio satisfaz INV vacuamente</p>
+        </div>
+        
+        <h4>D.</h4>
+        <div style="background-color: rgb(230, 230, 230); padding: 3vh;">
+          <pre style="border-radius: 8px; background-color: rgb(216, 216, 216);padding-left:4vh"><code>
+while i ≤ p e j ≤ q:
+    if L[i] ≤ M[j]:
+        N[k] = L[i]
+        i += 1
+    else:
+        N[k] = M[j]
+        j += 1
+    k += 1
+          </code></pre>
+        </div>
+        
+        <h4>E.</h4>
+        <div style="background-color: rgb(230, 230, 230); padding: 3vh;">
+          <p>Condição de saída \((i > p) ∨ (j > q)\) ocorre quando uma lista é esgotada, garantido pela medida de progresso</p>
+        </div>
+        
+        <h4>F.</h4>
+                <div style="background-color: rgb(230, 230, 230); padding: 3vh;">
+          <pre style="border-radius: 8px; background-color: rgb(216, 216, 216);padding-left:4vh"><code>
+# Copia restantes de L
+while i ≤ p:
+  N[k] = L[i]
+  i += 1
+  k += 1
+
+# Copia restantes de M
+while j ≤ q:
+  N[k] = M[j]
+  j += 1
+  k += 1
+          </code></pre>
+        </div>
+        
+        <h4>G.</h4>
+        <div style="background-color: rgb(230, 230, 230); padding: 3vh;">
+          <pre style="border-radius: 8px; background-color: rgb(216, 216, 216);padding-left:4vh"><code>
+merge(L, M):
+  p, q = len(L), len(M)
+  N = nova_lista(p+q)
+  i = j = k = 1
+  while i ≤ p e j ≤ q:
+    if L[i] ≤ M[j]:
+      N[k] = L[i]
+      i += 1
+    else:
+      N[k] = M[j]
+      j += 1
+    k += 1
+  # Copia restantes
+  while i ≤ j do
+    if L[i] ≤ pivo then
+      i++
+    else if L[j] > pivo then
+      j++
+    else
+      swap L[i], L[j]
+      i++
+      j--
+  end
+  return N
+          </code></pre>
+        </div>
+        
+        <h4>H.</h4>
+        <div style="background-color: rgb(230, 230, 230); padding: 3vh;">
+          <ul>
+            <li><strong>1 elemento:</strong> Funciona normalmente com comparação única;</li>
+            <li><strong>Elementos iguais:</strong> Mantém ordem estável com condição menor ou igual.</li>
+          </ul>
+        </div>
+        
+        <h4>I.</h4>
+        <div style="background-color: rgb(230, 230, 230); padding: 3vh;">
+          <p><strong>Complexidade:</strong> \(O(p + q)\)</p>
+          <ul>
+            <li>Cada elemento processado exatamente 1 vez;</li>
+            <li>2 loops adicionais de cópia: \(O(p + q)\).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+<hr>
+<address><p style="text-align: right"><i><b>José Mykael Alves Nogueira</b></i></p></address>
+</body>
+</html>
